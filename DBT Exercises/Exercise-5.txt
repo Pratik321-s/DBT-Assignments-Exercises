@@ -1,0 +1,148 @@
+1. Display the Supplier name and the Quantity sold.
+=> mysql> select SNAME,QTY from SUPPLIER,`SUPPLIER-PARTS-PROJECT` WHERE SUPPLIER.`S#` = `SUPPLIER-PARTS-PROJECT`.`S#`;
++---------+------+
+| SNAME   | QTY  |
++---------+------+
+| Kharve  |   15 |
+| Pathari |   17 |
+| Chavan  |   13 |
+| Kamble  |   19 |
+| Sortee  |   14 |
+| Solanki |    9 |
+| Mane    |   11 |
+| Sutar   |   16 |
+| Mehta   |   12 |
+| Dhake   |   20 |
++---------+------+
+10 rows in set (0.018 sec)
+  
+2. Display the Part name and Quantity sold.
+=> mysql> select PNAME,QTY from PARTS,`SUPPLIER-PARTS-PROJECT` WHERE PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#`;
++--------+------+
+| PNAME  | QTY  |
++--------+------+
+| Bolt   |   15 |
+| Nut    |   17 |
+| Screw  |   13 |
+| Washer |   19 |
+| Pin    |   14 |
+| Gear   |    9 |
+| Spring |   11 |
+| Plate  |   16 |
+| Rod    |   12 |
+| Clamp  |   20 |
++--------+------+
+10 rows in set (0.004 sec)
+   
+3. Display the Project name and Quantity sold.
+=> mysql> select JNAME,QTY from PROJECTS,`SUPPLIER-PARTS-PROJECT` WHERE PROJECTS.`J#` = `SUPPLIER-PARTS-PROJECT`.`J#`;
++---------+------+
+| JNAME   | QTY  |
++---------+------+
+| Apollo  |   15 |
+| Orion   |   17 |
+| Phoenix |   13 |
+| Titan   |   19 |
+| Nova    |   14 |
+| Zenith  |    9 |
+| Eclipse |   11 |
+| Horizon |   16 |
+| Matrix  |   12 |
+| Vertex  |   20 |
++---------+------+
+10 rows in set (0.013 sec)
+   
+4. Display the Supplier name, Part name, Project name and Quantity sold.
+=> mysql> select SNAME,PNAME,JNAME,QTY from SUPPLIER,PARTS,PROJECTS,`SUPPLIER-PARTS-PROJECT` WHERE SUPPLIER.`S#` = `SUPPLIER-PARTS-PROJECT`.`S#` AND PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#` AND PROJECTS.`J#` = `SUPPLIER-PARTS-PROJECT`.`J#`;
++---------+--------+---------+------+
+| SNAME   | PNAME  | JNAME   | QTY  |
++---------+--------+---------+------+
+| Kharve  | Bolt   | Apollo  |   15 |
+| Pathari | Nut    | Orion   |   17 |
+| Chavan  | Screw  | Phoenix |   13 |
+| Kamble  | Washer | Titan   |   19 |
+| Sortee  | Pin    | Nova    |   14 |
+| Solanki | Gear   | Zenith  |    9 |
+| Mane    | Spring | Eclipse |   11 |
+| Sutar   | Plate  | Horizon |   16 |
+| Mehta   | Rod    | Matrix  |   12 |
+| Dhake   | Clamp  | Vertex  |   20 |
++---------+--------+---------+------+
+10 rows in set (0.016 sec)
+  
+5. Display the Supplier name, Supplying Parts to a Project in the same City.
+=> mysql> select DISTINCT SUPPLIER.SNAME,PARTS.PNAME from SUPPLIER,PARTS,PROJECTS,`SUPPLIER-PARTS-PROJECT` WHERE SUPPLIER.`S#` = `SUPPLIER-PARTS-PROJECT`.`S#` AND PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#` AND PROJECTS.`J#` = `SUPPLIER-PARTS-PROJECT`.`J#` AND SUPPLIER.CITY = PROJECTS.CITY AND PROJECTS.CITY = PARTS.CITY;
++---------+--------+
+| SNAME   | PNAME  |
++---------+--------+
+| Kharve  | Bolt   |
+| Pathari | Nut    |
+| Chavan  | Screw  |
+| Kamble  | Washer |
+| Sortee  | Pin    |
+| Solanki | Gear   |
+| Mane    | Spring |
+| Sutar   | Plate  |
+| Mehta   | Rod    |
+| Dhake   | Clamp  |
++---------+--------+
+10 rows in set (0.012 sec)
+   
+6. Display the Part name that is ‘Red’ is color, and the Quantity sold.
+=> mysql> select PNAME,QTY from PARTS,`SUPPLIER-PARTS-PROJECT` WHERE PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#` AND COLOR = 'RED';
++-------+------+
+| PNAME | QTY  |
++-------+------+
+| Gear  |    9 |
++-------+------+
+1 row in set (0.007 sec)
+  
+7. Display all the Quantity sold by Suppliers with the Status = 20.
+=> mysql> select SNAME,QTY,STATUS from SUPPLIER,`SUPPLIER-PARTS-PROJECT` WHERE SUPPLIER.`S#` = `SUPPLIER-PARTS-PROJECT`.`S#` AND STATUS = 20;
++---------+------+--------+
+| SNAME   | QTY  | STATUS |
++---------+------+--------+
+| Pathari |   17 |     20 |
+| Sortee  |   14 |     20 |
+| Dhake   |   20 |     20 |
++---------+------+--------+
+3 rows in set (0.005 sec)
+   
+8. Display all the Parts and Quantity with a Weight > 14.
+=> mysql> select PNAME,QTY,WEIGHT from PARTS,`SUPPLIER-PARTS-PROJECT` WHERE PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#` AND WEIGHT > 14;
++-------+------+--------+
+| PNAME | QTY  | WEIGHT |
++-------+------+--------+
+| Screw |   13 |     15 |
++-------+------+--------+
+1 row in set (0.005 sec)
+   
+9. Display all the Project names and City, which has bought more than 500 Parts.   
+10. Display all the Part names and Quantity sold that have a Weight less than 15.
+=> mysql> select PNAME,QTY,WEIGHT from PARTS,`SUPPLIER-PARTS-PROJECT` WHERE PARTS.`P#` = `SUPPLIER-PARTS-PROJECT`.`P#` AND WEIGHT < 15;
++--------+------+--------+
+| PNAME  | QTY  | WEIGHT |
++--------+------+--------+
+| Bolt   |   15 |     10 |
+| Nut    |   17 |     12 |
+| Washer |   19 |     13 |
+| Pin    |   14 |     12 |
+| Gear   |    9 |     14 |
+| Spring |   11 |     13 |
+| Plate  |   16 |     12 |
+| Rod    |   12 |     14 |
+| Clamp  |   20 |     10 |
++--------+------+--------+
+9 rows in set (0.007 sec)
+   
+11. Display all the Employee names and the name of their Managers.
+=> mysql> select a.ENAME AS 'EMPLOYEE', b.ENAME AS 'MANAGER' from EMP a, EMP b WHERE a.MGR = b.EMPNO;
++----------+---------+
+| EMPLOYEE | MANAGER |
++----------+---------+
+| Kirun    | Arun    |
+| Ali      | Arun    |
+| Thomas   | Jack    |
+| Arun     | Jack    |
++----------+---------+
+4 rows in set (0.005 sec)  

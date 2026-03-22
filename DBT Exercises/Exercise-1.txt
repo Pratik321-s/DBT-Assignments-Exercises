@@ -1,0 +1,225 @@
+1. Create the table SEMP with the following structure:-  
+   EMPNO      CHAR(4)    
+   EMPNAME    CHAR(20)    
+   BASIC      FLOAT    
+   DEPTNO     CHAR(2)    
+   DEPTHEAD   CHAR(4)
+
+=> mysql> desc SEMP;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| EMPNO    | char(4)  | YES  |     | NULL    |       |
+| EMPNAME  | char(20) | YES  |     | NULL    |       |
+| BASIC    | float    | YES  |     | NULL    |       |
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTHEAD | char(4)  | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+5 rows in set (0.069 sec)  
+    
+2. Create the table SDEPT with the following structure:-    
+   DEPTNO     CHAR(2)    
+   DEPTNAME   CHAR(15)  
+
+=> mysql> desc SDEPT;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTNAME | char(15) | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+2 rows in set (0.014 sec)
+    
+3. Insert into the SDEPT table the following values:-     
+   10, Development    
+   20, Training 
+
+=> mysql> select * from SDEPT;
++--------+-------------+
+| DEPTNO | DEPTNAME    |
++--------+-------------+
+| 10     | Development |
+| 20     | Training    |
++--------+-------------+
+2 rows in set (0.027 sec)    
+    
+4. Insert into the SEMP table the following values:-    
+   0001, SUNIL, 6000, 10    
+   0002, HIREN, 8000, 20    
+   0003, ALI, 4000, 10, 0001    
+   0004, GEORGE, 6000, 0002
+
+=> mysql> select * from SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 0003  | ALI     |  4000 | 10     | 0001     |
+| 0004  | GEORGE  |  6000 | NULL   | 0002     |
++-------+---------+-------+--------+----------+
+4 rows in set (0.035 sec)
+
+5. Display all the data from the S table.
+=> mysql> select * from SUPPLIER;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S1   | Kharve  |     10 | London |
+| S2   | Pathari |     20 | Paris  |
+| S3   | Chavan  |     10 | Athens |
+| S4   | Kamble  |     30 | London |
+| S5   | Sortee  |     20 | Paris  |
+| S6   | Solanki |     10 | Athens |
+| S7   | Mane    |     30 | Athens |
+| S8   | Sutar   |     10 | London |
+| S9   | Mehta   |     10 | Paris  |
+| S10  | Dhake   |     20 | London |
++------+---------+--------+--------+
+10 rows in set (0.013 sec)   
+    
+6. Display only the S# and SNAME fields from the S table.
+=> mysql> select `S#`, SNAME from SUPPLIER;
++------+---------+
+| S#   | SNAME   |
++------+---------+
+| S1   | Kharve  |
+| S2   | Pathari |
+| S3   | Chavan  |
+| S4   | Kamble  |
+| S5   | Sortee  |
+| S6   | Solanki |
+| S7   | Mane    |
+| S8   | Sutar   |
+| S9   | Mehta   |
+| S10  | Dhake   |
++------+---------+
+10 rows in set (0.002 sec) 
+    
+7. Display the PNAME and COLOR from the P table for the CITY=”London”.
+=> mysql> select PNAME, COLOR from PARTS WHERE CITY = 'London';
++--------+--------+
+| PNAME  | COLOR  |
++--------+--------+
+| Bolt   | Grey   |
+| Washer | Silver |
+| Plate  | Yellow |
+| Clamp  | White  |
++--------+--------+
+4 rows in set (0.019 sec) 
+    
+8. Display all the Suppliers from London.
+=> mysql> select * from SUPPLIER WHERE CITY = 'London';
++------+--------+--------+--------+
+| S#   | SNAME  | STATUS | CITY   |
++------+--------+--------+--------+
+| S1   | Kharve |     10 | London |
+| S4   | Kamble |     30 | London |
+| S8   | Sutar  |     10 | London |
+| S10  | Dhake  |     20 | London |
++------+--------+--------+--------+
+4 rows in set (0.003 sec)    
+    
+9. Display all the Suppliers from Paris or Athens.
+=> mysql> select * from SUPPLIER WHERE CITY = 'Paris' OR CITY = 'Athens';
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Pathari |     20 | Paris  |
+| S3   | Chavan  |     10 | Athens |
+| S5   | Sortee  |     20 | Paris  |
+| S6   | Solanki |     10 | Athens |
+| S7   | Mane    |     30 | Athens |
+| S9   | Mehta   |     10 | Paris  |
++------+---------+--------+--------+
+6 rows in set (0.003 sec) 
+    
+10. Display all the Projects in Athens.
+=> mysql> select * from PROJECTS WHERE CITY = 'Athens';
++------+---------+--------+
+| J#   | JNAME   | CITY   |
++------+---------+--------+
+| J3   | Phoenix | Athens |
+| J6   | Zenith  | Athens |
+| J7   | Eclipse | Athens |
++------+---------+--------+
+3 rows in set (0.014 sec)   
+    
+11. Display all the Partnames with the weight between 12 and 14 (inclusive of both).
+=> mysql> select PNAME, WEIGHT from PARTS WHERE WEIGHT BETWEEN 12 AND 14;
++--------+--------+
+| PNAME  | WEIGHT |
++--------+--------+
+| Nut    |     12 |
+| Washer |     13 |
+| Pin    |     12 |
+| Gear   |     14 |
+| Spring |     13 |
+| Plate  |     12 |
+| Rod    |     14 |
++--------+--------+
+7 rows in set (0.003 sec)   
+    
+12. Display all the Suppliers with a Status greater than or equal to 20.
+=> mysql> select * from SUPPLIER WHERE STATUS >= 20;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Pathari |     20 | Paris  |
+| S4   | Kamble  |     30 | London |
+| S5   | Sortee  |     20 | Paris  |
+| S7   | Mane    |     30 | Athens |
+| S10  | Dhake   |     20 | London |
++------+---------+--------+--------+
+5 rows in set (0.004 sec)   
+    
+13. Display all the Suppliers except the Suppliers from London.
+=> mysql> select * from SUPPLIER WHERE CITY != 'London';
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Pathari |     20 | Paris  |
+| S3   | Chavan  |     10 | Athens |
+| S5   | Sortee  |     20 | Paris  |
+| S6   | Solanki |     10 | Athens |
+| S7   | Mane    |     30 | Athens |
+| S9   | Mehta   |     10 | Paris  |
++------+---------+--------+--------+
+6 rows in set (0.004 sec)   
+    
+14. Display only the Cities from where the Suppliers come from.
+=> mysql> select CITY from SUPPLIER;
++--------+
+| CITY   |
++--------+
+| London |
+| Paris  |
+| Athens |
+| London |
+| Paris  |
+| Athens |
+| Athens |
+| London |
+| Paris  |
+| London |
++--------+
+10 rows in set (0.007 sec)    
+    
+15. Assuming that the Part Weight is in GRAMS, display the same in 
+MILLIGRAMS and KILOGRAMS.
+=> mysql> select WEIGHT AS WEIGHT_GRAMS, WEIGHT / 1000 AS WEIGHT_MILIGRAMS, WEIGHT * 1000 AS WEIGHT_KILOGRAMS from PARTS;
++--------------+-------------------------+--------------------+
+| WEIGHT_GRAMS | WEIGHT_MILIGRAMS        | WEIGHT_KILOGRAMS   |
++--------------+-------------------------+--------------------+
+|         0.05 |  0.00005000000074505806 |  50.00000074505806 |
+|         0.02 | 0.000019999999552965164 | 19.999999552965164 |
+|         0.03 | 0.000029999999329447747 | 29.999999329447746 |
+|         0.01 | 0.000009999999776482582 |  9.999999776482582 |
+|         0.04 |  0.00003999999910593033 |  39.99999910593033 |
+|          1.5 |                  0.0015 |               1500 |
+|          0.2 |  0.00020000000298023223 | 200.00000298023224 |
+|            2 |                   0.002 |               2000 |
+|            3 |                   0.003 |               3000 |
+|         0.75 |                 0.00075 |                750 |
++--------------+-------------------------+--------------------+
+10 rows in set (0.040 sec)

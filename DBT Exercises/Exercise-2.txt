@@ -1,0 +1,87 @@
+1. Display the Supplier table in the descending order of CITY.
+=> mysql> select * from SUPPLIER ORDER BY CITY desc;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Pathari |     20 | Paris  |
+| S5   | Sortee  |     20 | Paris  |
+| S9   | Mehta   |     10 | Paris  |
+| S1   | Kharve  |     10 | London |
+| S4   | Kamble  |     30 | London |
+| S8   | Sutar   |     10 | London |
+| S10  | Dhake   |     20 | London |
+| S3   | Chavan  |     10 | Athens |
+| S6   | Solanki |     10 | Athens |
+| S7   | Mane    |     30 | Athens |
++------+---------+--------+--------+
+10 rows in set (0.044 sec)
+
+2. Display the Part Table in the ascending order of CITY and within the city in 
+the ascending order of Part names.
+=> mysql> select * from PARTS ORDER BY CITY ASC, PNAME ASC;
++------+--------+--------+--------+--------+
+| P#   | PNAME  | COLOR  | WEIGHT | CITY   |
++------+--------+--------+--------+--------+
+| P6   | Gear   | Red    |     14 | Athens |
+| P3   | Screw  | Black  |     15 | Athens |
+| P7   | Spring | Green  |     13 | Athens |
+| P1   | Bolt   | Grey   |     10 | London |
+| P10  | Clamp  | White  |     10 | London |
+| P8   | Plate  | Yellow |     12 | London |
+| P4   | Washer | Silver |     13 | London |
+| P2   | Nut    | Silver |     12 | Paris  |
+| P5   | Pin    | Blue   |     12 | Paris  |
+| P9   | Rod    | Brown  |     14 | Paris  |
++------+--------+--------+--------+--------+
+10 rows in set (0.007 sec)
+  
+3. Display all the Suppliers with a status between 10 and 20.
+=> mysql> select SNAME, STATUS from SUPPLIER WHERE STATUS BETWEEN 10 AND 20;
++---------+--------+
+| SNAME   | STATUS |
++---------+--------+
+| Kharve  |     10 |
+| Pathari |     20 |
+| Chavan  |     10 |
+| Sortee  |     20 |
+| Solanki |     10 |
+| Sutar   |     10 |
+| Mehta   |     10 |
+| Dhake   |     20 |
++---------+--------+
+8 rows in set (0.003 sec)
+   
+4. Display all the Parts and their Weight, which are not in the range of 10 and 15.
+=> mysql> select PNAME, WEIGHT from PARTS WHERE WEIGHT NOT BETWEEN 10 AND 15;
+Empty set (0.004 sec)
+
+5. Display all the Part names starting with the letter ‘S’.
+=> mysql> select PNAME from PARTS WHERE PNAME LIKE 'S%';
++--------+
+| PNAME  |
++--------+
+| Screw  |
+| Spring |
++--------+
+2 rows in set (0.041 sec)
+  
+6. Display all the Suppliers, belonging to cities starting with the letter ‘L’.
+=> mysql> select SNAME, CITY from SUPPLIER WHERE CITY LIKE 'L%';
++--------+--------+
+| SNAME  | CITY   |
++--------+--------+
+| Kharve | London |
+| Kamble | London |
+| Sutar  | London |
+| Dhake  | London |
++--------+--------+
+4 rows in set (0.005 sec)
+   
+7. Display all the Projects, with the third letter in JNAME as ‘n’.
+=> mysql> select JNAME from PROJECTS WHERE JNAME LIKE '__n%';
++--------+
+| JNAME  |
++--------+
+| Zenith |
++--------+
+1 row in set (0.008 sec)

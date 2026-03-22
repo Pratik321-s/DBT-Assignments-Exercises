@@ -1,0 +1,65 @@
+1. Display all the Suppliers with the same Status as the supplier, ‘CLARK’.
+=> mysql> select SNAME, STATUS from SUPPLIER WHERE STATUS = (select STATUS from SUPPLIER WHERE SNAME = 'CLARK');
+Empty set (0.179 sec)
+  
+2. Display all the Employees in the same department as the employee ‘MILLER’.
+=> mysql> select * from EMP where DEPTNO = (select DEPTNO from EMP WHERE ENAME = 'Miller');
+Empty set (0.054 sec)
+   
+3. Display all the Parts which have more Weight than all the Red parts.
+=> mysql> select * from PARTS where WEIGHT >ALL (select WEIGHT from PARTS WHERE COLOR = 'RED');
++------+-------+-------+--------+--------+
+| P#   | PNAME | COLOR | WEIGHT | CITY   |
++------+-------+-------+--------+--------+
+| P3   | Screw | Black |     15 | Athens |
++------+-------+-------+--------+--------+
+1 row in set (0.007 sec)
+
+4. Display all the Projects going on in the same city as the project ‘TAPE’.
+=> mysql> select * from PROJECTS where CITY = (select CITY from PROJECTS WHERE JNAME = 'TAPE');
+Empty set (0.007 sec)
+   
+5. Display all the Parts with Weight less than all the Green parts.
+=> mysql> select * from PARTS WHERE WEIGHT <ALL (select WEIGHT from PARTS WHERE COLOR = 'Green');
++------+-------+--------+--------+--------+
+| P#   | PNAME | COLOR  | WEIGHT | CITY   |
++------+-------+--------+--------+--------+
+| P1   | Bolt  | Grey   |     10 | London |
+| P2   | Nut   | Silver |     12 | Paris  |
+| P5   | Pin   | Blue   |     12 | Paris  |
+| P8   | Plate | Yellow |     12 | London |
+| P10  | Clamp | White  |     10 | London |
++------+-------+--------+--------+--------+
+5 rows in set (0.011 sec)
+   
+6. Display the name of the Supplier who has sold the maximum Quantity (in one 
+sale).
+=> mysql> select SNAME from SUPPLIER,`SUPPLIER-PARTS-PROJECT` where SUPPLIER.`S#` = `SUPPLIER-PARTS-PROJECT`.`S#` AND QTY = (select MAX(QTY) from `SUPPLIER-PARTS-PROJECT`);
++-------+
+| SNAME |
++-------+
+| Dhake |
++-------+
+1 row in set (0.078 sec)
+   
+7. Display the name of the Employee with the minimum Salary.
+=> mysql> select ENAME from EMP WHERE SAL = (select MIN(SAL) from EMP);
++-------+
+| ENAME |
++-------+
+| Kirun |
++-------+
+1 row in set (0.008 sec)
+   
+8. Display the name of the Supplier who has sold the maximum overall Quantity (sum 
+of Sales).
+=>
+   
+9. Display the name of the Department with the maximum number of Employees.
+=> mysql> select DNAME from DEPT WHERE DEPTNO IN (select DEPTNO from EMP GROUP BY DEPTNO HAVING COUNT(*) = (select MAX(EMP_COUNT) from (select COUNT(*) AS EMP_COUNT from EMP GROUP BY DEPTNO) AS ABCD));
++-------+
+| DNAME |
++-------+
+| TRN   |
++-------+
+1 row in set (0.211 sec) 
