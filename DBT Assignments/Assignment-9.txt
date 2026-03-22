@@ -1,0 +1,51 @@
+1) Write a query that lists each order number followed by the name of the customer 
+who made the order.
+=> mysql> select ONUM, CNAME from ORDERS, CUSTOMERS WHERE ORDERS.CNUM = CUSTOMERS.CNUM;
++------+----------+
+| ONUM | CNAME    |
++------+----------+
+| 3001 | Cisneros |
+| 3003 | Hoffman  |
+| 3002 | Pereira  |
+| 3005 | Liu      |
+| 3006 | Cisneros |
+| 3009 | Giovanni |
+| 3007 | Grass    |
+| 3008 | Clemens  |
+| 3010 | Grass    |
+| 3011 | Clemens  |
++------+----------+
+10 rows in set (0.062 sec)
+ 
+2) Write a query that gives the names of both the salesperson and the customer for 
+each order along with the order number.
+=> mysql> select SNAME, CNAME, ONUM from SALESPEOPLE, CUSTOMERS, ORDERS WHERE SALESPEOPLE.SNUM = CUSTOMERS.SNUM = ORDERS.SNUM;
+Empty set (0.008 sec)
+ 
+3) Write a query that produces all customers serviced by salespeople with a 
+commission above 12%. Output the customer’s name, the salesperson’s name, 
+and the salesperson’s rate of commission.
+=> mysql> select CNAME, SNAME, COMM from CUSTOMERS, SALESPEOPLE WHERE CUSTOMERS.SNUM = SALESPEOPLE.SNUM AND SALESPEOPLE.COMM > 0.12;
++----------+--------+------+
+| CNAME    | SNAME  | COMM |
++----------+--------+------+
+| Liu      | Serres | 0.13 |
+| Grass    | Serres | 0.13 |
+| Cisneros | Rifkin | 0.15 |
++----------+--------+------+
+3 rows in set (0.031 sec)
+ 
+4) Write a query that calculates the amount of the salesperson’s commission on each 
+order by a customer with a rating above 100.
+=> mysql> select ONUM, AMT*COMM from ORDERS, CUSTOMERS, SALESPEOPLE WHERE ORDERS.CNUM = CUSTOMERS.CNUM AND ORDERS.SNUM = SALESPEOPLE.SNUM AND CUSTOMERS.RATING > 100;
++------+----------+
+| ONUM | AMT*COMM |
++------+----------+
+| 3010 |   170.29 |
+| 3007 |     9.85 |
+| 3005 |   670.86 |
+| 3006 |   164.72 |
+| 3001 |     2.80 |
+| 3009 |   171.32 |
++------+----------+
+6 rows in set (0.007 sec)

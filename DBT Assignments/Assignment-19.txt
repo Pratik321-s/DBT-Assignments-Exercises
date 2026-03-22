@@ -1,0 +1,61 @@
+1) Create a view that shows all of the customers who have the highest ratings.
+=> mysql> create view highest_rated_customers
+       -> as
+       -> select * from customers where rating =
+       -> (select MAX(rating) from customers);
+Query OK, 0 rows affected (0.181 sec)
+
+mysql> select * from highest_rated_customers;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    300 | 1003 |
+| 2004 | Grass    | Berlin   |    300 | 1004 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+3 rows in set (0.055 sec)
+
+2) Create a view that shows the number of salespeople in each city.
+=> mysql> create view city_salespeople
+       -> as
+       -> select city, count(*) from salespeople
+       -> group by city;
+Query OK, 0 rows affected (0.095 sec)
+
+mysql> select * from city_salespeople;
++-----------+----------+
+| city      | count(*) |
++-----------+----------+
+| London    |        2 |
+| San Jose  |        2 |
+| Barcelona |        1 |
+| New York  |        1 |
++-----------+----------+
+4 rows in set (0.125 sec)
+ 
+3) Create a view that shows the average and total orders for each salesperson after 
+his or her name. Assume all names are unique.
+=> mysql> create view average_total_orders
+       -> as
+       -> select s.SNAME,
+       -> avg(o.AMT),
+       -> sum(o.AMT)
+       -> from Salespeople s
+       -> JOIN Orders o
+       -> ON s.SNUM = o.SNUM
+       -> Group by s.SNAME;
+Query OK, 0 rows affected (0.552 sec)
+
+mysql> select * from average_total_orders;
++---------+-------------+------------+
+| SNAME   | avg(o.AMT)  | sum(o.AMT) |
++---------+-------------+------------+
+| Peel    |  767.190002 |     767.19 |
+| Serres  | 2182.050049 |    6546.15 |
+| Motika  | 1910.099976 |    1910.10 |
+| Rifkin  |  558.425017 |    1116.85 |
+| Axelrod | 1713.229980 |    1713.23 |
++---------+-------------+------------+
+5 rows in set (0.201 sec)
+
+4) Create a view that shows each salesperson with multiple customers. 

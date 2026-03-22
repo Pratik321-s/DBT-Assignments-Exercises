@@ -1,0 +1,12 @@
+1) Which field of the Customers table is the primary key?
+=> "CNUM" field is the primary key from Customers Table.
+
+2) What is the 4th column of the Customers table?
+=> "RATING" is the 4th column of the Customers Table.
+
+3) What is another word for row?  For column?
+=> "Record/Tuple" is the another words for row.
+   "Field/Attribute" is the another words for column.
+
+4) Why isn’t it possible to see the first five rows of a table?
+=> When we SELECT from a table the searching is always sequential and the order of rows in the output depends on the row address, it will always be in ascending order of row address hence, it is not possible to see first or last N rows of the table.

@@ -1,0 +1,14 @@
+1) Assume there is a table called Multicust, with all of the same column definitions 
+as Salespeople. Write a command that inserts all salespeople with more than one 
+customer into this table.
+=> mysql> insert into MULTICUST select * from SALESPEOPLE WHERE SNUM IN (select SNUM from CUSTOMERS GROUP BY SNUM HAVING COUNT(CNUM) > 1);
+ 
+2) Write a command that deletes all customers with no current orders.
+=> mysql> delete from CUSTOMERS WHERE CNUM NOT IN (select CNUM from ORDERS);
+Query OK, 1 row affected (1.069 sec)
+ 
+3) Write a command that increases by twenty percent the commissions of all 
+salespeople with total orders above Rs. 3,000.
+=> mysql> update SALESPEOPLE SET COMM = COMM * 1.20 WHERE SNUM IN (select SNUM from ORDERS GROUP BY SNUM HAVING SUM(AMT) > 3000);
+Query OK, 1 row affected (0.216 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
